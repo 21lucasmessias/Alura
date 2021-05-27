@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "compile": "tsc"
+    "compile": "tsc",
+    "start": "tsc -w"
   },
   "repository": "git@github.com:21lucasmessias/Alura-Typescript-01.git",
   "author": "21lucasmessias <21.lucasmessias@gmail.com>",
