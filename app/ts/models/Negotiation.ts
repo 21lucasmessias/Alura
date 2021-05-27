@@ -1,4 +1,8 @@
 class Negotiation {
+    private _data
+    private _quantity
+    private _value
+    
     constructor(data, quantity,  value) {
         this._data = data;
         this._quantity = quantity;
