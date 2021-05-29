@@ -1,3 +1,3 @@
-let negotiation = new Negotiation(new Date(), 1, 100)
+let negotiationController = new NegotiationController()
 
-console.log(negotiation)
+document.querySelector('.form').addEventListener('submit', negotiationController.handle.bind(negotiationController))
