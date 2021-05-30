@@ -1,10 +1,4 @@
-class MessageView {
-  private _element: Element
-
-  constructor(selector: string) {
-    this._element = document.querySelector(selector)
-  }
-
+class MessageView extends View {
   update(model: string) {
     this._element.innerHTML = this.template(model)
   }
