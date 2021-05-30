@@ -4,8 +4,9 @@ class Negotiations {
     }
     add(negotiation) {
         this._negotiations.push(negotiation);
+        return negotiation;
     }
     toArray() {
-        return this._negotiations;
+        return [].concat(this._negotiations);
     }
 }

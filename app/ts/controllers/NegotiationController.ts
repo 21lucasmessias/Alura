@@ -2,14 +2,17 @@ class NegotiationController {
     private _inputDate: HTMLInputElement
     private _inputQuantity: HTMLInputElement
     private _inputValue: HTMLInputElement
+    private _negotiations: Negotiations
 
     constructor() {
         this._inputDate = document.querySelector<HTMLInputElement>('#data')
         this._inputQuantity = document.querySelector<HTMLInputElement>('#quantidade')
         this._inputValue = document.querySelector<HTMLInputElement>('#valor')
+
+        this._negotiations = new Negotiations()
     }
 
-    handle(event: Event) {
+    addHandle(event: Event) {
         event.preventDefault();
 
         const negotiation = new Negotiation(
@@ -18,6 +21,8 @@ class NegotiationController {
             parseFloat(this._inputValue.value)
         )
 
-        console.log(negotiation)
+        this._negotiations.add(negotiation)
+
+        console.log(this._negotiations.toArray())
     }
 }
