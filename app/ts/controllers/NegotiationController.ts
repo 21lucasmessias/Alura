@@ -1,23 +1,31 @@
 class NegotiationController {
-    private _inputDate: HTMLInputElement
-    private _inputQuantity: HTMLInputElement
-    private _inputValue: HTMLInputElement
+	private _inputDate: HTMLInputElement
+	private _inputQuantity: HTMLInputElement
+	private _inputValue: HTMLInputElement
+	private _negotiations: Negotiations
+	private _negotiationsView =  new NegotiationsView('#negotiationsView')
 
-    constructor() {
-        this._inputDate = document.querySelector<HTMLInputElement>('#data')
-        this._inputQuantity = document.querySelector<HTMLInputElement>('#quantidade')
-        this._inputValue = document.querySelector<HTMLInputElement>('#valor')
-    }
+	constructor() {
+		this._inputDate = document.querySelector<HTMLInputElement>('#data')
+		this._inputQuantity = document.querySelector<HTMLInputElement>('#quantidade')
+		this._inputValue = document.querySelector<HTMLInputElement>('#valor')
 
-    handle(event: Event) {
-        event.preventDefault();
+		this._negotiations = new Negotiations()
 
-        const negotiation = new Negotiation(
-            new Date(this._inputDate.value.replace(/-/g, ',')),
-            parseInt(this._inputQuantity.value),
-            parseFloat(this._inputValue.value)
-        )
+		this._negotiationsView.update(this._negotiations)
+	}
 
-        console.log(negotiation)
-    }
+	addHandle(event: Event): void {
+		event.preventDefault();
+
+		const negotiation = new Negotiation(
+			new Date(this._inputDate.value.replace(/-/g, ',')),
+			parseInt(this._inputQuantity.value),
+			parseFloat(this._inputValue.value)
+		)
+
+		this._negotiations.add(negotiation)
+
+		this._negotiationsView.update(this._negotiations)
+	}
 }
