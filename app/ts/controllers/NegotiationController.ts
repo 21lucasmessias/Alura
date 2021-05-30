@@ -12,7 +12,7 @@ class NegotiationController {
 
 		this._negotiations = new Negotiations()
 
-		this._negotiationsView.update()
+		this._negotiationsView.update(this._negotiations)
 	}
 
 	addHandle(event: Event): void {
@@ -26,6 +26,6 @@ class NegotiationController {
 
 		this._negotiations.add(negotiation)
 
-		console.log(this._negotiations.toArray())
+		this._negotiationsView.update(this._negotiations)
 	}
 }
