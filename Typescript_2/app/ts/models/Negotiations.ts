@@ -1,4 +1,4 @@
-import { Negotiation } from "./Negotiation"
+import { Negotiation } from "./index"
 
 export class Negotiations {
 	private _negotiations: Array<Negotiation> = []

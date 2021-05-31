@@ -1,4 +1,4 @@
-import { View } from "./View";
+import { View } from "./index";
 
 export class MessageView extends View<string> {
   template(model: string): string {
