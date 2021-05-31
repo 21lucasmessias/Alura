@@ -1,3 +1,3 @@
 let negotiationController = new NegotiationController()
 
-document.querySelector('.form').addEventListener('submit', negotiationController.addHandle.bind(negotiationController))
+$('.form').on("submit", negotiationController.addHandle.bind(negotiationController));
