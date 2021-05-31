@@ -1,4 +1,7 @@
-class NegotiationsView extends View<Negotiations> {
+import { Negotiations } from "../models/index";
+import { View } from "./index";
+
+export class NegotiationsView extends View<Negotiations> {
 	template(negotiations: Negotiations): string {
 		return `
 			<table class="table table-hover table-bordered">

@@ -1,4 +1,6 @@
-class Negotiations {
+import { Negotiation } from "./index"
+
+export class Negotiations {
 	private _negotiations: Array<Negotiation> = []
 
 	add(negotiation: Negotiation): Negotiation {

@@ -1,4 +1,4 @@
-class Negotiation {
+export class Negotiation {
 	constructor(private _data: Date, private _quantity: number, private _value: number) {}
 
 	get data() {

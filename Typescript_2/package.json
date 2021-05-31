@@ -4,7 +4,9 @@
   "main": "index.js",
   "scripts": {
     "compile": "tsc",
-    "start": "tsc -w"
+    "watch": "tsc -w",
+    "server": "lite-server --baseDir=app",
+    "start": "concurrently \"npm run watch\" \"npm run server\""
   },
   "repository": "git@github.com:21lucasmessias/Alura-Typescript-01.git",
   "author": "21lucasmessias <21.lucasmessias@gmail.com>",
@@ -12,6 +14,8 @@
   "dependencies": {},
   "devDependencies": {
     "@types/jquery": "^3.5.5",
+    "concurrently": "^6.2.0",
+    "lite-server": "^2.6.1",
     "typescript": "^4.3.2"
   }
 }
