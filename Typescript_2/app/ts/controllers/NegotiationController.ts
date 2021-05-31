@@ -23,9 +23,9 @@ export class NegotiationController {
 		event.preventDefault();
 
 		const negotiation = new Negotiation(
-			new Date(this._inputDate.val().toString().replace(/-/g, ',')),
-			parseInt(this._inputQuantity.val().toString()),
-			parseFloat(this._inputValue.val().toString())
+			new Date((this._inputDate.val() as string).replace(/-/g, ',')),
+			parseInt(this._inputQuantity.val() as string),
+			parseFloat(this._inputValue.val() as string)
 		)
 
 		this._negotiations.add(negotiation)

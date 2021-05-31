@@ -2,7 +2,7 @@ export abstract class View<T> {
   private _element: JQuery
   private _skip: boolean
 
-  constructor(selector: string, skip?: boolean) {
+  constructor(selector: string, skip: boolean = false) {
     this._skip = skip
     this._element = $(selector)
   }

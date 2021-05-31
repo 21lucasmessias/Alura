@@ -10,6 +10,6 @@ export class Negotiations {
 	}
 
 	toArray(): Array<Negotiation>{
-		return [].concat(this._negotiations)
+		return ([] as Array<Negotiation>).concat(this._negotiations)
 	}
 }
