@@ -22,8 +22,16 @@ export class NegotiationController {
 	addHandle(event: Event): void {
 		event.preventDefault();
 
+		let date: Date = new Date((this._inputDate.val() as string).replace(/-/g, ','))
+
+		if(!this._isValidDay(date)){
+			this._messageView.update('Negotation are unavaiable on the weekend!')
+
+			return
+		}
+
 		const negotiation = new Negotiation(
-			new Date((this._inputDate.val() as string).replace(/-/g, ',')),
+			date,
 			parseInt(this._inputQuantity.val() as string),
 			parseFloat(this._inputValue.val() as string)
 		)
@@ -33,4 +41,18 @@ export class NegotiationController {
 		this._negotiationsView.update(this._negotiations)
 		this._messageView.update('Negotiation added successfully!')
 	}
+
+	private _isValidDay(date: Date) {
+		return date.getDay() !== DayOfWeek.saturday && date.getDay() !== DayOfWeek.sunday
+	}
+}
+
+enum DayOfWeek {
+	sunday,
+	monday,
+	tuesday,
+	wednesday,
+	thursday,
+	friday,
+	saturday
 }
