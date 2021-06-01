@@ -6,8 +6,8 @@ export class NegotiationController {
 	private _inputQuantity: JQuery
 	private _inputValue: JQuery
 	private _negotiations: Negotiations
-	private _negotiationsView =  new NegotiationsView('#negotiationsView')
-	private _messageView = new MessageView('#messageView')
+	private _negotiationsView =  new NegotiationsView('#negotiationsView', true)
+	private _messageView = new MessageView('#messageView', true)
 
 	constructor() {
 		this._inputDate = $('#data')
@@ -22,10 +22,18 @@ export class NegotiationController {
 	addHandle(event: Event): void {
 		event.preventDefault();
 
+		let date: Date = new Date((this._inputDate.val() as string).replace(/-/g, ','))
+
+		if(!this._isValidDay(date)){
+			this._messageView.update('Negotation are unavaiable on the weekend!')
+
+			return
+		}
+
 		const negotiation = new Negotiation(
-			new Date(this._inputDate.val().toString().replace(/-/g, ',')),
-			parseInt(this._inputQuantity.val().toString()),
-			parseFloat(this._inputValue.val().toString())
+			date,
+			parseInt(this._inputQuantity.val() as string),
+			parseFloat(this._inputValue.val() as string)
 		)
 
 		this._negotiations.add(negotiation)
@@ -33,4 +41,18 @@ export class NegotiationController {
 		this._negotiationsView.update(this._negotiations)
 		this._messageView.update('Negotiation added successfully!')
 	}
+
+	private _isValidDay(date: Date) {
+		return date.getDay() !== DayOfWeek.saturday && date.getDay() !== DayOfWeek.sunday
+	}
+}
+
+enum DayOfWeek {
+	sunday,
+	monday,
+	tuesday,
+	wednesday,
+	thursday,
+	friday,
+	saturday
 }
