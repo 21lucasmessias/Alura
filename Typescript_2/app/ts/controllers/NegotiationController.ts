@@ -1,3 +1,4 @@
+import { CalculateTime } from "../helpers/decorators/index"
 import { Negotiation, Negotiations } from "../models/index"
 import { MessageView, NegotiationsView } from "../views/index"
 
@@ -19,6 +20,7 @@ export class NegotiationController {
 		this._negotiationsView.update(this._negotiations)
 	}
 
+	@CalculateTime()
 	addHandle(event: Event): void {
 		event.preventDefault();
 
@@ -33,6 +35,7 @@ export class NegotiationController {
 		const negotiation = new Negotiation(
 			date,
 			parseInt(this._inputQuantity.val() as string),
+
 			parseFloat(this._inputValue.val() as string)
 		)
 
