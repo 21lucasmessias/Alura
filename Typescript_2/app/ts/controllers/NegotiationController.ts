@@ -20,7 +20,7 @@ export class NegotiationController {
 		this._negotiationsView.update(this._negotiations)
 	}
 
-	@CalculateTime()
+	@CalculateTime(true)
 	addHandle(event: Event): void {
 		event.preventDefault();
 
