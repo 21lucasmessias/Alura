@@ -25,7 +25,9 @@ export class NegotiationController {
 	}
 
 	@throttle()
-	addHandle(): void {
+	addHandle(event: Event): void {
+		event.preventDefault();
+
 		let date: Date = new Date((this._inputDate.val() as string).replace(/-/g, ','))
 
 		if(!this._isValidDay(date)){
@@ -52,9 +54,8 @@ export class NegotiationController {
 		return date.getDay() !== DayOfWeek.saturday && date.getDay() !== DayOfWeek.sunday
 	}
 
-	@throttle()
 	import(): void {
-		const isOk: HandlerFunction = (res: Response) => {	
+		const isOk: HandlerFunction = (res: Response) => {
 			if(res.ok){
 				return res;
 			}
@@ -63,8 +64,12 @@ export class NegotiationController {
 		}
 
 		this._service.getNegotiations(isOk)
-		.then(res => {
-			res.forEach(it => this._negotiations.add(it))
+		.then(negotiationsToImport => {
+			const negotiationsAlreadyImported = this._negotiations.toArray()
+
+			negotiationsToImport = negotiationsToImport.filter(negotiation => !negotiationsAlreadyImported.some(alreadyImported => negotiation.isSame(alreadyImported)))
+
+			negotiationsToImport.forEach(negotiation => this._negotiations.add(negotiation))
 
 			this._negotiationsView.update(this._negotiations)
 		})

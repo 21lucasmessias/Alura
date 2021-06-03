@@ -1,8 +1,9 @@
-import { ApiNegotiation } from "../models/types/ApiNegotiation";
-import { Negotiation } from "../models/Negotiation";
+import { ApiNegotiation } from "../models/types/index";
+import { Negotiation } from "../models/index";
 
 export class NegotiationService {
   getNegotiations(handler: HandlerFunction): Promise<Array<Negotiation>> {
+    
     return fetch('http://localhost:8080/dados')
       .then(res => handler(res))
       .then(res => res.json())

@@ -1,7 +1,7 @@
 import { Negotiation } from "./index"
-import { Printable } from "./types/Printable"
+import { Printable, Sameless } from "./types/index"
 
-export class Negotiations implements Printable {
+export class Negotiations implements Printable, Sameless<Negotiations> {
 	private _negotiations: Array<Negotiation> = []
 
 	add(negotiation: Negotiation): Negotiation {
@@ -16,5 +16,9 @@ export class Negotiations implements Printable {
 
 	toConsole(): void {
 		console.log(this._negotiations)
+	}
+
+	isSame(negotiations: Negotiations): boolean {
+		return JSON.stringify(negotiations) == JSON.stringify(this._negotiations)
 	}
 }

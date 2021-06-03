@@ -4,9 +4,7 @@ export const throttle = (time = 500) => (
 
     let timer = 0
 
-    descriptor.value = (...args: any[]) => {
-      if(event) event.preventDefault();
-      
+    descriptor.value = (...args: any[]) => {      
       clearInterval(timer)
       timer = setTimeout(() => originalMethod.apply(this, args), time)      
     }
