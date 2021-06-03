@@ -47,6 +47,10 @@ export class NegotiationController {
 	private _isValidDay(date: Date) {
 		return date.getDay() !== DayOfWeek.saturday && date.getDay() !== DayOfWeek.sunday
 	}
+
+	import() {
+		console.log('import')
+	}
 }
 
 enum DayOfWeek {
