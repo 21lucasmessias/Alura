@@ -1,4 +1,4 @@
-import { domInject } from "../helpers/decorators/index"
+import { domInject, throttle } from "../helpers/decorators/index"
 import { ApiNegotiation, Negotiation, Negotiations } from "../models/index"
 import { MessageView, NegotiationsView } from "../views/index"
 
@@ -20,9 +20,8 @@ export class NegotiationController {
 		this._negotiationsView.update(this._negotiations)
 	}
 
-	addHandle(event: Event): void {
-		event.preventDefault();
-
+	@throttle()
+	addHandle(): void {
 		let date: Date = new Date((this._inputDate.val() as string).replace(/-/g, ','))
 
 		if(!this._isValidDay(date)){
@@ -47,7 +46,8 @@ export class NegotiationController {
 		return date.getDay() !== DayOfWeek.saturday && date.getDay() !== DayOfWeek.sunday
 	}
 
-	import() {
+	@throttle()
+	import(): void {
 		const isOk = (res: Response) => {	
 			if(res.ok){
 				return res;
