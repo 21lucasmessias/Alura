@@ -1,6 +1,6 @@
 import { domInject, throttle } from "../helpers/decorators/index"
-import { ApiNegotiation, Negotiation, Negotiations } from "../models/index"
-import { NegotiationService } from "../services/NegotiationService"
+import { Negotiation, Negotiations } from "../models/index"
+import { HandlerFunction, NegotiationService } from "../services/index"
 import { MessageView, NegotiationsView } from "../views/index"
 
 export class NegotiationController {
@@ -51,7 +51,7 @@ export class NegotiationController {
 
 	@throttle()
 	import(): void {
-		const isOk = (res: Response) => {	
+		const isOk: HandlerFunction = (res: Response) => {	
 			if(res.ok){
 				return res;
 			}

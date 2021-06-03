@@ -2,7 +2,7 @@ import { ApiNegotiation } from "../models/ApiNegotiation";
 import { Negotiation } from "../models/Negotiation";
 
 export class NegotiationService {
-  getNegotiations(handler: Function): Promise<Array<Negotiation>> {
+  getNegotiations(handler: HandlerFunction): Promise<Array<Negotiation>> {
     return fetch('http://localhost:8080/dados')
       .then(res => handler(res))
       .then(res => res.json())
@@ -10,4 +10,8 @@ export class NegotiationService {
         res.map(data => new Negotiation(new Date(), data.vezes, data.montante))
       ))
   }
+}
+
+export interface HandlerFunction {
+  (res: Response): Response
 }
