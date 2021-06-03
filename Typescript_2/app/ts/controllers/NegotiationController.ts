@@ -1,5 +1,5 @@
 import { domInject } from "../helpers/decorators/index"
-import { Negotiation, Negotiations } from "../models/index"
+import { ApiNegotiation, Negotiation, Negotiations } from "../models/index"
 import { MessageView, NegotiationsView } from "../views/index"
 
 export class NegotiationController {
@@ -59,7 +59,7 @@ export class NegotiationController {
 		fetch('http://localhost:8080/dados')
 		.then(res => isOk(res))
 		.then(res => res.json())
-		.then((data: Array<{vezes: number, montante: number}>) => {
+		.then((data: Array<ApiNegotiation>) => {
 			data.map(it => new Negotiation(
 				new Date(),
 				it.vezes,
