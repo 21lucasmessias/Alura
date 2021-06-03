@@ -1,1 +1,1 @@
-# Alura-Typescript-01
+# Alura-Typescript-02
