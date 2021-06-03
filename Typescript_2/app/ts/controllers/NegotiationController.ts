@@ -54,7 +54,7 @@ export class NegotiationController {
 		return date.getDay() !== DayOfWeek.saturday && date.getDay() !== DayOfWeek.sunday
 	}
 
-	import(): void {
+	async import() {
 		const isOk: HandlerFunction = (res: Response) => {
 			if(res.ok){
 				return res;
@@ -63,19 +63,19 @@ export class NegotiationController {
 			throw new Error(res.statusText)
 		}
 
-		this._service.getNegotiations(isOk)
-		.then(negotiationsToImport => {
+		try {
+			const negotiationsToImport = await this._service.getNegotiations(isOk)
+
 			const negotiationsAlreadyImported = this._negotiations.toArray()
+	
+			negotiationsToImport
+			.filter(negotiation => !negotiationsAlreadyImported.some(alreadyImported => negotiation.isSame(alreadyImported)))
+			.forEach(negotiation => this._negotiations.add(negotiation))
+		} catch (error) {
+			this._messageView.update(error.message)
+		}
 
-			negotiationsToImport = negotiationsToImport.filter(negotiation => !negotiationsAlreadyImported.some(alreadyImported => negotiation.isSame(alreadyImported)))
-
-			negotiationsToImport.forEach(negotiation => this._negotiations.add(negotiation))
-
-			this._negotiationsView.update(this._negotiations)
-		})
-		.catch(e => {
-			this._messageView.update(e.message)
-		})
+		this._negotiationsView.update(this._negotiations)
 	}
 }
 
