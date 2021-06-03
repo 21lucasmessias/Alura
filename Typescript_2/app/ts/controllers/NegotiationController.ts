@@ -1,4 +1,5 @@
 import { domInject, throttle } from "../helpers/decorators/index"
+import { printer } from "../helpers/utils/index"
 import { Negotiation, Negotiations } from "../models/index"
 import { HandlerFunction, NegotiationService } from "../services/index"
 import { MessageView, NegotiationsView } from "../views/index"
@@ -24,7 +25,9 @@ export class NegotiationController {
 	}
 
 	@throttle()
-	addHandle(): void {
+	addHandle(event: Event): void {
+		event.preventDefault();
+
 		let date: Date = new Date((this._inputDate.val() as string).replace(/-/g, ','))
 
 		if(!this._isValidDay(date)){
@@ -40,6 +43,8 @@ export class NegotiationController {
 		)
 
 		this._negotiations.add(negotiation)
+
+		printer(negotiation, this._negotiations)
 		
 		this._negotiationsView.update(this._negotiations)
 		this._messageView.update('Negotiation added successfully!')
@@ -49,9 +54,8 @@ export class NegotiationController {
 		return date.getDay() !== DayOfWeek.saturday && date.getDay() !== DayOfWeek.sunday
 	}
 
-	@throttle()
-	import(): void {
-		const isOk: HandlerFunction = (res: Response) => {	
+	async import() {
+		const isOk: HandlerFunction = (res: Response) => {
 			if(res.ok){
 				return res;
 			}
@@ -59,12 +63,19 @@ export class NegotiationController {
 			throw new Error(res.statusText)
 		}
 
-		this._service.getNegotiations(isOk)
-		.then(res => {
-			res.forEach(it => this._negotiations.add(it))
+		try {
+			const negotiationsToImport = await this._service.getNegotiations(isOk)
 
-			this._negotiationsView.update(this._negotiations)
-		})
+			const negotiationsAlreadyImported = this._negotiations.toArray()
+	
+			negotiationsToImport
+			.filter(negotiation => !negotiationsAlreadyImported.some(alreadyImported => negotiation.isSame(alreadyImported)))
+			.forEach(negotiation => this._negotiations.add(negotiation))
+		} catch (error) {
+			this._messageView.update(error.message)
+		}
+
+		this._negotiationsView.update(this._negotiations)
 	}
 }
 
