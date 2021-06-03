@@ -1,1 +1,2 @@
-export * from './CalculateTime'
+export * from './calculateTime'
+export * from './domInject'
