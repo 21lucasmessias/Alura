@@ -1,5 +1,6 @@
 import { domInject, throttle } from "../helpers/decorators/index"
 import { ApiNegotiation, Negotiation, Negotiations } from "../models/index"
+import { NegotiationService } from "../services/NegotiationService"
 import { MessageView, NegotiationsView } from "../views/index"
 
 export class NegotiationController {
@@ -15,6 +16,8 @@ export class NegotiationController {
 	private _negotiations = new Negotiations()
 	private _negotiationsView =  new NegotiationsView('#negotiationsView', true)
 	private _messageView = new MessageView('#messageView', true)
+
+	private _service = new NegotiationService()
 
 	constructor() {
 		this._negotiationsView.update(this._negotiations)
@@ -56,22 +59,12 @@ export class NegotiationController {
 			throw new Error(res.statusText)
 		}
 
-		fetch('http://localhost:8080/dados')
-		.then(res => isOk(res))
-		.then(res => res.json())
-		.then((data: Array<ApiNegotiation>) => {
-			data.map(it => new Negotiation(
-				new Date(),
-				it.vezes,
-				it.montante
-			))
-			.forEach(it => {
-				this._negotiations.add(it)
-			})
+		this._service.getNegotiations(isOk)
+		.then(res => {
+			res.forEach(it => this._negotiations.add(it))
 
 			this._negotiationsView.update(this._negotiations)
 		})
-		.catch(e => console.log(e))
 	}
 }
 
