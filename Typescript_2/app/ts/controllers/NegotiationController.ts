@@ -34,7 +34,6 @@ export class NegotiationController {
 		const negotiation = new Negotiation(
 			date,
 			parseInt(this._inputQuantity.val() as string),
-
 			parseFloat(this._inputValue.val() as string)
 		)
 
@@ -49,7 +48,30 @@ export class NegotiationController {
 	}
 
 	import() {
-		console.log('import')
+		const isOk = (res: Response) => {	
+			if(res.ok){
+				return res;
+			}
+
+			throw new Error(res.statusText)
+		}
+
+		fetch('http://localhost:8080/dados')
+		.then(res => isOk(res))
+		.then(res => res.json())
+		.then((data: Array<{vezes: number, montante: number}>) => {
+			data.map(it => new Negotiation(
+				new Date(),
+				it.vezes,
+				it.montante
+			))
+			.forEach(it => {
+				this._negotiations.add(it)
+			})
+
+			this._negotiationsView.update(this._negotiations)
+		})
+		.catch(e => console.log(e))
 	}
 }
 
