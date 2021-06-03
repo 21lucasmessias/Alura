@@ -10,6 +10,11 @@ export class NegotiationService {
       .then((res: Array<ApiNegotiation>) => (
         res.map(data => new Negotiation(new Date(), data.vezes, data.montante))
       ))
+      .catch(e => {
+        console.log(e)
+
+        throw new Error('Service offline.')
+      })
   }
 }
 

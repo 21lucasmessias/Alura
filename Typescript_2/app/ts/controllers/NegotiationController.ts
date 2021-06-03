@@ -73,6 +73,9 @@ export class NegotiationController {
 
 			this._negotiationsView.update(this._negotiations)
 		})
+		.catch(e => {
+			this._messageView.update(e.message)
+		})
 	}
 }
 
