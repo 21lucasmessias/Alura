@@ -1,4 +1,5 @@
 import { domInject, throttle } from "../helpers/decorators/index"
+import { printer } from "../helpers/printer"
 import { Negotiation, Negotiations } from "../models/index"
 import { HandlerFunction, NegotiationService } from "../services/index"
 import { MessageView, NegotiationsView } from "../views/index"
@@ -40,6 +41,8 @@ export class NegotiationController {
 		)
 
 		this._negotiations.add(negotiation)
+
+		printer(negotiation, this._negotiations)
 		
 		this._negotiationsView.update(this._negotiations)
 		this._messageView.update('Negotiation added successfully!')

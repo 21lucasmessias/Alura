@@ -1,4 +1,4 @@
-import { ApiNegotiation } from "../models/ApiNegotiation";
+import { ApiNegotiation } from "../models/types/ApiNegotiation";
 import { Negotiation } from "../models/Negotiation";
 
 export class NegotiationService {

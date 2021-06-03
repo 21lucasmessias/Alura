@@ -1,3 +1,4 @@
 export * from './Negotiation'
 export * from './Negotiations'
-export * from './ApiNegotiation'
+export * from './types/ApiNegotiation'
+export * from './Printable'
